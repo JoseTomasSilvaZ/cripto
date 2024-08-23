@@ -15,7 +15,9 @@ def compute_not_alpha_output(char, offset):
     else:
         return chr((ord(char) + offset) % 128)
 
-def cesar(message, offset):
+def cesar():
+    message = input("Enter the message: ")
+    offset = int(input("Enter the offset: "))
     output = ""
     for char in message:
         if char.isalpha():
@@ -25,12 +27,10 @@ def cesar(message, offset):
         else:
             output += char  
 
-    print("Mensaje cifrado:", output)
+    return output
 
 def main():
-    message = input("Enter the message: ")
-    offset = int(input("Enter the offset: "))
-    cesar(message, offset)
+    print(cesar())
 
 if __name__ == "__main__":
     main()
