@@ -15,7 +15,6 @@ def main():
         if packet.haslayer(IP) and packet[IP].dst == '8.8.8.8':
             letter = get_message(packet)
             if letter:
-                print(letter, end='')
                 message += letter
     
     combinations = generate_all_combinations(message)
