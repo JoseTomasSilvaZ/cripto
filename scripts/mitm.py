@@ -8,8 +8,8 @@ def get_message(packet):
     return ''  
 
 def main():
-    file = input("Enter the file name to read: ")
-    packets = rdpcap(f"./{file}")
+    file = input("Enter the capture name (just name, not extension): ")
+    packets = rdpcap(f"../ws_captures/{file}.pcapng")
     message = ''
     for packet in packets:
         if packet.haslayer(IP) and packet[IP].dst == '8.8.8.8':
