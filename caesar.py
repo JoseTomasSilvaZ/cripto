@@ -1,3 +1,5 @@
+import sys
+
 def get_alpha_starting_point(char):
     return ord('A') if char.isupper() else ord('a')
 
@@ -6,6 +8,13 @@ def get_not_alpha_starting_point(char):
 
 def compute_alpha_output(char, offset):
     start = get_alpha_starting_point(char)
+    '''
+    E.g -> with char = b and offset = 3
+    start = 97
+    ord = 98
+    (98 - 97 + 3) % 26 = 4
+    chr(97 + 4) = e
+    '''
     return chr((ord(char) - start + offset) % 26 + start)
 
 def compute_not_alpha_output(char, offset):
@@ -15,9 +24,8 @@ def compute_not_alpha_output(char, offset):
     else:
         return chr((ord(char) + offset) % 128)
 
-def cesar():
-    message = input("Enter the message: ")
-    offset = int(input("Enter the offset: "))
+def caesar(message, offset):
+    offset = int(offset)
     output = ""
     for char in message:
         if char.isalpha():
@@ -30,7 +38,13 @@ def cesar():
     return output
 
 def main():
-    print(cesar())
+    if len(sys.argv) != 3:
+        print(f"Usage: python3 {sys.argv[0]} <message> <offset>")
+        sys.exit(1)
+    
+    message = sys.argv[1]
+    offset = sys.argv[2]
+    print(caesar(message, offset))
 
 if __name__ == "__main__":
     main()
