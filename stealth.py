@@ -1,14 +1,14 @@
-from scapy.all import IP, ICMP, sr1
+from scapy.all import IP, ICMP, sr1, Raw
 import sys 
 import time
 import struct
 
 def generate_timestamp():
-    ts = int(time.time() * 1000) & 0xFFFFFFFF
+    ts = int(time.time()) & 0xFFFFFFFF
     return struct.pack("<Q",ts)
 
 def generate_packet(destination, timestamp, number, payload):
-    return IP(dst=destination)/ICMP(type=8, id=1, seq=number)/timestamp/payload
+    return IP(dst=destination)/ICMP(type=8, id=1, seq=number)/bytes(timestamp)/Raw(load=payload)
 
 def generate_icmp_payload():
     payload = b""
@@ -23,6 +23,7 @@ def send_letter(destination, letter, number):
     payload = letter.encode()
     payload += b"\x00" * 7
     payload += generate_icmp_payload() 
+    print(generate_timestamp())
     packet = generate_packet(destination, generate_timestamp(), number, payload)
     send_packet(packet)
     
