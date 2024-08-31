@@ -1,4 +1,4 @@
-from scapy.all import IP, ICMP, sr1, Raw
+from scapy.all import IP, ICMP, send, Raw
 import sys 
 import time
 import struct
@@ -17,13 +17,12 @@ def generate_icmp_payload():
     return payload
 
 def send_packet(packet):
-    sr1(packet)
+    send(packet)
 
 def send_letter(destination, letter, number):
     payload = letter.encode()
     payload += b"\x00" * 7
     payload += generate_icmp_payload() 
-    print(generate_timestamp())
     packet = generate_packet(destination, generate_timestamp(), number, payload)
     send_packet(packet)
     
@@ -36,4 +35,3 @@ if __name__ == "__main__":
         print(f"Usage: python3 {sys.argv[0]} <encrypted_message>")
         sys.exit(1)
     send_packets(sys.argv[1])
-
